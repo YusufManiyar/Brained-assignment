@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import CreateComponent from './components/CreateComponent'
+import ShowComponent from './components/ShowComponent'
+
 
 export default function Index(){
   return(
     <BrowserRouter basename='/'>
     <Routes>
-      <Route path='/' element = {<CreateComponent />}>
+      {/* <Route path='/' element = {<CreateComponent />}>
+      </Route> */}
+      <Route path='/' element = {<ShowComponent />}>
       </Route>
     </Routes>
     </BrowserRouter>

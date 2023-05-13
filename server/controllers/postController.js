@@ -1,6 +1,6 @@
 const Post =require('../models/postModel')
 
-const createPost = async(req,res) => {
+const createPost = async (req,res) => {
 
     try{
         const post = new Post({
@@ -24,6 +24,78 @@ const createPost = async(req,res) => {
     }
 }
 
+const getPosts = async (req,res) => {
+
+    try{
+
+        const posts = await Post.find({})
+        res.status(200).send({
+            success: true,
+            msg: 'Posts Data',
+            data: posts
+        })
+
+    }catch(error){
+        res.status(400).send({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
+const updatePost = async (req,res) => {
+
+    try{
+
+        if(req.file !== undefined) {
+            var { id, title, date } = req.body
+            var image = req.file.filename
+            
+            await Post.findByIdAndUpdate({_id: id}, {$set: {title: title, date: date, image: image}})
+            
+            res.status(200).send({
+                success: true,
+                msg: 'Post Updated Successfully'
+            })
+        }
+        else
+        {
+            throw 'File not uploaded'
+        }
+
+
+
+
+    }catch(error){
+        res.status(400).send({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
+const deletePost = async (req,res) => {
+
+    try{
+
+        await Post.deleteOne({_id : req.params.id})
+
+        res.status(200).send({
+            success: true,
+            msg: 'Post deleted successfully'
+        })
+
+    }catch(error){
+        res.status(400).send({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
 module.exports = {
-    createPost
+    createPost,
+    getPosts,
+    deletePost,
+    updatePost
 }

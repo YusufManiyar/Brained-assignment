@@ -19,10 +19,14 @@ function CreateComponent() {
 
         const response = await PostServices.create(formData)
         if(response.data.success  === true){
-            
+            setMessage('post created successfuly')
+        }else{
+            setMessage(response.data.errMsg.split(':')[1])
+            console.log(response.data.errMsg.split(':')[1])
         }
 
         event.target.reset()
+        // setTimeout(() => setMessage(''), 5000)
     }
 
 return (
